@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student tracker</title>
+</head>
+<script>
+  const students = [];
+
+  function AddStd() {
+    const Stdname = document.getElementById("stdname").value;
+    const marks = document.getElementById("marks").value;
+
+    if (Stdname === "" || marks === "") {
+      alert("Please enter both name and marks");
+      return;
+    }
+
+    students.push({ name: Stdname, marks: Number(marks) });
+
+    document.getElementById("stdname").value = "";
+    document.getElementById("marks").value = "";
+    alert("Student added successfully!");
+  }
+
+  function ShowAll() {
+    if (students.length === 0) {
+      document.getElementById("output").innerHTML = "No students added yet.";
+      return;
+    }
+
+    let listItems = students
+      .map(s => `<li>${s.name} - ${s.marks}</li>`)
+      .join("");
+
+    document.getElementById("output").innerHTML = `<h3>All Students:</h3><ul>${listItems}</ul>`;
+  }
+
+  function ShowAverage() {
+    if (students.length === 0) {
+      document.getElementById("output").innerHTML = "No students to calculate average.";
+      return;
+    }
+
+    let total = students.reduce((acc, s) => acc + s.marks, 0);
+    let avg = total / students.length;
+
+    document.getElementById("output").innerHTML = `<h3>Average Marks: ${avg.toFixed(2)}</h3>`;
+  }
+
+  function showabv() {
+    let passed = students.filter(s => s.marks >= 40);
+
+    if (passed.length === 0) {
+      document.getElementById("output").innerHTML = "No students passed.";
+      return;
+    }
+
+    let listItems = passed.map(s => `<li>${s.name} - ${s.marks}</li>`).join("");
+    document.getElementById("output").innerHTML = `<h3>Passed Students:</h3><ul>${listItems}</ul>`;
+  }
+
+  function tpr() {
+    if (students.length === 0) {
+      document.getElementById("output").innerHTML = "No students added yet.";
+      return;
+    }
+
+    let topper = students[0];
+    for (let i = 1; i < students.length; i++) {
+      if (students[i].marks > topper.marks) {
+        topper = students[i];
+      }
+    }
+
+    document.getElementById("output").innerHTML =
+      `<h3>Topper:</h3> <p>${topper.name} - ${topper.marks} marks</p>`;
+  }
+</script>
+<body>
+  <div class="studentdiv">
+    <div class="stdname">
+      <label>Student Name</label><br>
+      <input id="stdname" type="text" placeholder="Enter Student Name"><br>
+    </div><br>
+    <div class="Marks">
+      <label>Marks</label><br>
+      <input id="marks" type="number" placeholder="Enter Student Marks"><br>
+    </div>
+    <br>
+    <div class="button1">
+      <button onclick="AddStd()">Add Student</button>
+    </div><br>
+    <div class="button2">
+      <button onclick="ShowAll()">Show All</button>
+    </div><br>
+    <div class="button3">
+      <button onclick="ShowAverage()">Average</button>
+    </div><br>
+    <div class="button4">
+      <button onclick="showabv()">Show Passed (>=40)</button>
+    </div><br>
+    <div class="button5">
+      <button onclick="tpr()">Show Topper</button>
+    </div>
+  </div>
+  <br>
+  <!-- Output section -->
+  <div id="output"></div>
+</body>
+</html>

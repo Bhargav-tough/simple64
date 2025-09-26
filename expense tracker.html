@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+
+</head>
+<body>
+  <div class="tracker">
+    <h1>Expense Tracker</h1>
+
+    <label>Expense name</label><br>
+    <input id="Expense_name" type="text" placeholder="e.g groceries"><br><br>
+
+    <label>Amount</label><br>
+    <input id="Amount" type="text" placeholder="e.g 500"><br><br>
+
+    <label>Description</label><br>
+    <input id="Description" type="text" placeholder="e.g Bought fruits and vegetables"><br><br>
+
+    <label>Date</label><br>
+    <input id="Date" type="date"><br><br>
+
+    <button onclick="addExpense()">Add Expense</button>
+    <button onclick="calculateTotal()">Calculate Total</button><br><br>
+
+    <label>Search</label><br>
+    <input id="search" type="text" placeholder="Search here" onkeyup="searchExpense()"><br><br>
+
+    <table border="1" id="expenseTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Description</th>
+          <th>Date</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <p id="total">Total: 0</p>
+  </div>
+
+  <script>
+    const expenses = [];
+
+    function addExpense() {
+      const name = document.getElementById("Expense_name").value;
+      const Amt = document.getElementById("Amount").value;
+      const desc = document.getElementById("Description").value;
+      const date = document.getElementById("Date").value;
+
+      if (!name || isNaN(Amt) || !date) {
+        alert("Please fill all details correctly");
+        return;
+      }
+
+      expenses.push({ name, Amt: Number(Amt), desc, date });
+      renderTable();
+
+      // Reset input fields
+      document.getElementById("Expense_name").value = "";
+      document.getElementById("Amount").value = "";
+      document.getElementById("Description").value = "";
+      document.getElementById("Date").value = "";
+    }
+
+    function renderTable(filtered = expenses) {
+      const tbody = document.querySelector("#expenseTable tbody");
+      tbody.innerHTML = "";
+      filtered.forEach((exp, index) => {
+        const row = `<tr>
+          <td>${exp.name}</td>
+          <td>${exp.Amt}</td>
+          <td>${exp.desc}</td>
+          <td>${exp.date}</td>
+          <td><button onclick="Deleteitem(${index})">Delete</button></td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function Deleteitem(index) {
+      expenses.splice(index, 1);
+      renderTable();
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      const total = expenses.reduce((sum, exp) => sum + exp.Amt, 0);
+      document.getElementById("total").innerText = "Total: " + total;
+    }
+
+    function searchExpense() {
+      const query = document.getElementById("search").value.toLowerCase();
+      const filtered = expenses.filter(exp =>
+        exp.name.toLowerCase().includes(query) ||
+        exp.desc.toLowerCase().includes(query) ||
+        exp.date.includes(query)
+      );
+      renderTable(filtered);
+    }
+  </script>
+</body>
+</html>
