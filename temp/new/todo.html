@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to do</title>
+</head>
+<script>
+    let gid = 1; 
+
+    function creatchild(title, description, id){
+        const child = document.createElement("div");
+
+        const firstdiv = document.createElement("div");
+        firstdiv.innerHTML = title;
+
+        const seconddiv = document.createElement("div");
+        seconddiv.innerHTML = description;
+
+        const thirddiv = document.createElement("button");
+        thirddiv.innerHTML = "Mark as done";
+        thirddiv.setAttribute("onclick", `markAsdone(${id})`);
+
+        child.appendChild(firstdiv);
+        child.appendChild(seconddiv);
+        child.appendChild(thirddiv);
+        child.setAttribute("id", id);
+
+        return child;
+    }
+
+    function addtodo(){
+        const task = document.getElementById("Task").value;
+        const desc = document.getElementById("description").value;
+        const parent = document.getElementById("container");
+        parent.appendChild(creatchild(task, desc, gid++));
+    }
+
+    function markAsdone(id){ 
+        const taskDiv = document.getElementById(id);
+        taskDiv.children[2].innerHTML="Done";
+        if(taskDiv) taskDiv.style.textDecoration = "line-through";
+    }
+</script>
+<body>
+    <div class="todo">
+        <input type="text" id="Task" placeholder="Enter task"><br><br>
+        <input type="text" id="description" placeholder="Description"><br><br>
+        <button onclick="addtodo()">Add task</button>
+        <div id="container" class="container"></div>
+    </div>
+</body>
+</html>

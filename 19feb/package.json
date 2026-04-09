@@ -1,0 +1,11 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongodb": "^7.1.0"
+  },
+  "scripts": {
+    "dev": "node mongoerror.js"
+  }
+}

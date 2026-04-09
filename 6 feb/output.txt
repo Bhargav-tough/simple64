@@ -1,0 +1,6 @@
+Hello, this is text data
+{
+  "name": "Vishal",
+  "age": 21,
+  "role": "Student"
+}

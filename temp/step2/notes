@@ -1,0 +1,13 @@
+component,states,rerendring three things to focus on react.
+Object:represent current state of the app.
+state:all dynamic structure in your app/website eg linkdin 
+topbar{
+    home
+    notification
+    search
+    invitation   etc
+}
+Components:depending on the state how doescomponent look
+RE rendring: updating the state is called re rendring(changes DOM element)
+Virtual DOM:track of old dom and new manipulated dom
+jsx react type file (js+xml)
